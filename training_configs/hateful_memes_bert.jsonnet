@@ -6,7 +6,6 @@ local test_data = "/home/moshe/repos/hateful-memes/data/test_seen.jsonl";
 {
     "train_data_path": train_data,
     "validation_data_path": dev_data,
-    "test_data_path": test_data,
     "dataset_reader": {
         "type": "memereader",
         "source_tokenizer": {
@@ -29,6 +28,10 @@ local test_data = "/home/moshe/repos/hateful-memes/data/test_seen.jsonl";
         "batch_size": 8,
         "shuffle": true
     },
+    "model": {
+        "type": "hatefulmememodel",
+        "text_model_name": text_model_name
+    },
     "trainer": {
         "num_epochs": 60,
         "optimizer": {
@@ -38,11 +41,11 @@ local test_data = "/home/moshe/repos/hateful-memes/data/test_seen.jsonl";
             "eps": 1e-8,
             "correct_bias": true
         },
-        "tensorboard_writer": {
-            "summary_interval": 4,
-            "should_log_learning_rate": true
-        },
+//        "tensorboard_writer": {
+//            "summary_interval": 4,
+//            "should_log_learning_rate": true
+//        },
         "grad_norm": 1.0,
-        "validation_metric": "accuracy"
+        "validation_metric": "+accuracy"
     }
 }

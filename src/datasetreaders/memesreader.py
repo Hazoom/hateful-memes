@@ -60,13 +60,12 @@ class HatefulMemeDatasetReader(DatasetReader):
         lines = srsly.read_jsonl(file_path)
         for line in lines:
             text = line["text"]
-            label = line["label"]
             line_is_valid = self._validate_line(text)
             if not line_is_valid:
                 continue
             yield self.text_to_instance(
                 text,
-                label,
+                label=line.get("label", None),
                 metadata=line,
             )
 
@@ -95,7 +94,7 @@ class HatefulMemeDatasetReader(DatasetReader):
         source_field = TextField(tokenized_source, self._source_token_indexers)
 
         fields = {"source_tokens": source_field, "metadata": MetadataField(metadata)}
-        if label:
+        if label is not None:
             fields["label"] = LabelField(label, skip_indexing=True)
 
         return Instance(fields)
