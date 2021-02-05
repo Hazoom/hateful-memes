@@ -1,0 +1,4 @@
+torch
+transformers
+allennlp
+allennlp-models
