@@ -14,11 +14,11 @@ local num_gpus = 0;
     "dataset_reader": {
         "type": "memereader",
         "image_dir": datadir + "img",
-        "feature_cache_dir": datadir + "/feature_cache_torchvision",
+        "feature_cache_dir": datadir + "feature_cache_torchvision",
         "image_loader": "torch",
         "image_featurizer": "resnet_backbone",
         "region_detector": "faster_rcnn",
-        "image_processing_batch_size": 16,
+        "image_processing_batch_size": 4,
         "tokenizer": {
             "type": "pretrained_transformer",
             "model_name": text_model_name
