@@ -40,6 +40,8 @@ class HatefulMemeDatasetReader(VisionReader):
 
         self._use_cache = True
 
+        self._batch_size = getattr(self, "image_processing_batch_size", 8)
+
     def _validate_line(self, text: str, image_path: Union[str, None]) -> bool:
         if not text:
             return False
@@ -85,7 +87,7 @@ class HatefulMemeDatasetReader(VisionReader):
             if not line_is_valid:
                 continue
             batch.append((image_path, text, line.get("label", None), line))
-            if len(batch) == self.image_processing_batch_size or index == len(lines) - 1:
+            if len(batch) == self._batch_size or index == len(lines) - 1:
                 # It would be much easier to just process one image at a time, but it's faster to process
                 # them in batches. So this code gathers up instances until it has enough to fill up a batch
                 # that needs processing, and then processes them all.
@@ -94,8 +96,6 @@ class HatefulMemeDatasetReader(VisionReader):
                     processed_images = batch_image_paths  # all nones
                 else:
                     processed_images = self._process_image_paths(batch_image_paths, use_cache=self._use_cache)
-
-                assert len(batch) == len(processed_images)
 
                 for item, processed_image in zip(batch, processed_images):
                     yield self.text_to_instance(

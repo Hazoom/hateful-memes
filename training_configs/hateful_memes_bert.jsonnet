@@ -14,11 +14,11 @@ local num_gpus = 0;
     "dataset_reader": {
         "type": "memereader",
         "image_dir": datadir + "img",
-        "feature_cache_dir": datadir + "feature_cache_torchvision",
-        "image_loader": "torch",
-        "image_featurizer": "resnet_backbone",
-        "region_detector": "faster_rcnn",
-        "image_processing_batch_size": 4,
+//        "feature_cache_dir": datadir + "feature_cache_torchvision",
+//        "image_loader": "torch",
+//        "image_featurizer": "resnet_backbone",
+//        "region_detector": "faster_rcnn",
+        "image_processing_batch_size": 8,
         "tokenizer": {
             "type": "pretrained_transformer",
             "model_name": text_model_name
@@ -32,8 +32,8 @@ local num_gpus = 0;
         },
         "source_max_tokens": 512,
         "uncased": true,
-//         "max_instances": 10, // DEBUG setting
-        "truncate_long_sequences": true, // if false, will skip long sequences
+//        "max_instances": 200, // DEBUG setting
+        "truncate_long_sequences": true, // if false, will skip long sequences,
     },
     "data_loader": {
         "batch_size": 8,
@@ -61,6 +61,6 @@ local num_gpus = 0;
 //            "should_log_learning_rate": true
 //        },
         "grad_norm": 1.0,
-        "validation_metric": "+accuracy"
+        "validation_metric": "+auc"
     }
 }
